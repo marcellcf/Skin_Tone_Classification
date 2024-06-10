@@ -8,7 +8,7 @@ from tensorflow.keras.preprocessing.image import img_to_array
 import numpy as np
 
 # Memuat model yang telah dilatih
-model_path ='model3.h5'
+model_path ='modelb4.h5'
 model = load_model(model_path)
 
 # Daftar kelas
