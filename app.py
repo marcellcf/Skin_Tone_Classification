@@ -83,19 +83,20 @@ if uploaded_file is not None:
     }
 
     palette_paths = color_palette_paths.get(prediction)
-if palette_paths:
-    # Muat semua gambar palet warna
-    palette_images = [Image.open(path) for path in palette_paths if os.path.exists(path)]
     
-    # Tampilkan gambar palet warna sesuai tata letak yang diinginkan
-    col1, col2, col3 = st.columns(3)
-    col2.image(palette_images[0], width=300, caption='Palette')  # Photo 1
-    col1, col2, col3 = st.columns(3)
-    col1.image(palette_images[1], width=300, caption='Palette 1')  # Photo 2
-    col3.image(palette_images[2], width=300, caption='Palette 2')  # Photo 3
-    col1.image(palette_images[3], width=300, caption='Palette 3')  # Photo 4
-    col3.image(palette_images[4], width=300, caption='Palette 4')  # Photo 5
-    col1, col2, col3 = st.columns(3)
-    col2.image(palette_images[5], width=300, caption='Palette 5')  # Photo 6
-else:
-    st.write("Color palettes not available.")
+    if palette_paths:
+        # Muat semua gambar palet warna
+        palette_images = [Image.open(path) for path in palette_paths if os.path.exists(path)]
+        
+        # Tampilkan gambar palet warna sesuai tata letak yang diinginkan
+        col1, col2, col3 = st.columns(3)
+        col2.image(palette_images[0], width=300, caption='Palette')  # Photo 1
+        col1, col2, col3 = st.columns(3)
+        col1.image(palette_images[1], width=300, caption='Palette 1')  # Photo 2
+        col3.image(palette_images[2], width=300, caption='Palette 2')  # Photo 3
+        col1.image(palette_images[3], width=300, caption='Palette 3')  # Photo 4
+        col3.image(palette_images[4], width=300, caption='Palette 4')  # Photo 5
+        col1, col2, col3 = st.columns(3)
+        col2.image(palette_images[5], width=300, caption='Palette 5')  # Photo 6
+    else:
+        st.write("Color palettes not available.")
