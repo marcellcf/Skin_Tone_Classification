@@ -6,9 +6,10 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 import numpy as np
+import os
 
 # Memuat model yang telah dilatih
-model_path ='modela85va89.h5'
+model_path = 'modela85va89.h5'
 model = load_model(model_path)
 
 # Daftar kelas
@@ -43,10 +44,10 @@ def process_image(image_path):
 
         # Menambahkan rekomendasi outfit berdasarkan warna kulit
         outfit_recommendations = {
-            'putih': 'Warna-warna gelap seperti hitam, biru dongker, atau merah marun.',
-            'kuning': 'Warna-warna cerah seperti putih, krem, atau pastel.',
-            'coklat': 'Warna-warna netral seperti abu-abu, coklat muda, atau biru tua.',
-            'hitam': 'Warna-warna terang seperti putih, kuning, atau merah.'
+            'putih': 'Merah Cerah, Cokelat Gelap, Pirang Tajam, Hitam, Navy',
+            'kuning': 'Biru Muda, Merah Muda Pastel, Hijau Mint, Lavender, Peach',
+            'coklat': 'Merah Hati, Kuning Mustard, Hijau Zaitun, Coral, Cokelat Muda',
+            'hitam': 'Putih Tulang, Emas, Perak, Biru Kobalt, Magenta'
         }
         recommended_outfit = outfit_recommendations.get(predicted_class, 'No recommendation available.')
 
@@ -71,4 +72,30 @@ if uploaded_file is not None:
     prediction, recommended_outfit = process_image("temp.jpg")
 
     st.write("Prediction: ", prediction)
-    st.write("Recommended Outfit Colors: ", recommended_outfit)
+    st.write("color outfit recommendation: ", recommended_outfit)
+
+    # Menampilkan palet warna berdasarkan hasil prediksi
+    color_palette_paths = {
+    'putih': ['pallete1.jpg', 'palleteputih2.jpg', 'palleteputih3.jpg', 'palleteputih4.jpg', 'palleteputih5.jpg', 'palleteputih6.jpg'],
+    'kuning': ['pallete1.jpg', 'palleteputih2.jpg', 'palleteputih3.jpg', 'palleteputih4.jpg', 'palleteputih5.jpg', 'palleteputih6.jpg'],
+    'coklat': ['pallete1.jpg', 'palleteputih2.jpg', 'palleteputih3.jpg', 'palleteputih4.jpg', 'palleteputih5.jpg', 'palleteputih6.jpg'],
+    'hitam': ['pallete1.jpg', 'palleteputih2.jpg', 'palleteputih3.jpg', 'palleteputih4.jpg', 'palleteputih5.jpg', 'palleteputih6.jpg']
+    }
+
+    palette_paths = color_palette_paths.get(prediction)
+if palette_paths:
+    # Muat semua gambar palet warna
+    palette_images = [Image.open(path) for path in palette_paths if os.path.exists(path)]
+    
+    # Tampilkan gambar palet warna sesuai tata letak yang diinginkan
+    col1, col2, col3 = st.columns(3)
+    col2.image(palette_images[0], width=300, caption='Palette')  # Photo 1
+    col1, col2, col3 = st.columns(3)
+    col1.image(palette_images[1], width=300, caption='Palette 1')  # Photo 2
+    col3.image(palette_images[2], width=300, caption='Palette 2')  # Photo 3
+    col1.image(palette_images[3], width=300, caption='Palette 3')  # Photo 4
+    col3.image(palette_images[4], width=300, caption='Palette 4')  # Photo 5
+    col1, col2, col3 = st.columns(3)
+    col2.image(palette_images[5], width=300, caption='Palette 5')  # Photo 6
+else:
+    st.write("Color palettes not available.")
